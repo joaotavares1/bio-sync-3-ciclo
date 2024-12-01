@@ -1,17 +1,18 @@
-import React, { useState } from 'react'
-import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom'
-import Home from './pages/Home/Home.jsx'
-import ButtonsUserRegister from './pages/Register/ButtonsUserRegister.jsx'
-import PontosDeDescarte from './pages/dropPoints/PontosDeDescarte.jsx'
-import LoginModal from './components/LoginModal.jsx'
-import RegistroDeUsuarios from './pages/Register/UserRegister.jsx'
-import Header from './components/Header.jsx'
-import Footer from './components/Footer.jsx'
-import Agendamentos from './pages/Agendamentos/Agendamentos.jsx'
-import Conteudos from './pages/Conteudos/Conteudos.jsx'
-import Artigo1 from './pages/Conteudos/Artigo1.jsx'
-import Noticias from './pages/Noticias/Noticias.jsx'
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import Home from './pages/Home/Home.jsx';
+import ButtonsUserRegister from './pages/Register/ButtonsUserRegister.jsx';
+import PontosDeDescarte from './pages/dropPoints/PontosDeDescarte.jsx';
+import LoginModal from './components/LoginModal.jsx';
+import RegistroDeUsuarios from './pages/Register/UserRegister.jsx';
+import Header from './components/Header.jsx';
+import Footer from './components/Footer.jsx';
+import Agendamentos from './pages/Agendamentos/Agendamentos.jsx';
+import Conteudos from './pages/Conteudos/Conteudos.jsx';
+import Artigo1 from './pages/Conteudos/Artigo1.jsx';
+import Noticias from './pages/Noticias/Noticias.jsx';
 import VLibras from './components/VLibras.jsx';
+import { ConnectionStatus } from './components/ConnectionStatus.jsx';
 
 function App() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -33,6 +34,7 @@ function App() {
         <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
         <ConditionalFooter />
         <VLibras />
+        <ConnectionStatus /> {/* Aqui o componente ConnectionStatus será renderizado */}
       </div>
     </Router>
   );
@@ -40,7 +42,7 @@ function App() {
 
 function ConditionalHeader({ openLoginModal }) {
   const location = useLocation();
-  const showHeaderRoutes = ['/' ,'/UserRegister', '/buttonsUserRegister' , '/dropPoints', '/Agendamentos', '/Conteudos', '/Artigo1', '/Noticias' ]; // Rotas onde o Header deve ser exibido
+  const showHeaderRoutes = ['/', '/UserRegister', '/buttonsUserRegister', '/dropPoints', '/Agendamentos', '/Conteudos', '/Artigo1', '/Noticias'];
 
   return showHeaderRoutes.includes(location.pathname) ? (
     <Header openLoginModal={openLoginModal} />
@@ -49,7 +51,7 @@ function ConditionalHeader({ openLoginModal }) {
 
 function ConditionalFooter() {
   const location = useLocation();
-  const showFooterRoutes = ['/' ,'/UserRegister', '/buttonsUserRegister' , '/dropPoints', '/Agendamentos',  '/Conteudos', '/Artigo1', '/Noticias' ]; 
+  const showFooterRoutes = ['/', '/UserRegister', '/buttonsUserRegister', '/dropPoints', '/Agendamentos', '/Conteudos', '/Artigo1', '/Noticias'];
 
   return showFooterRoutes.includes(location.pathname) ? (
     <Footer />

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../firebase/firebase';
 import { Dialog } from '@headlessui/react';
 import { getApp } from 'firebase/app';
 import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
+import { FcGoogle } from 'react-icons/fc';
 
 export default function LoginModal({ isOpen, onClose }) {
   const [email, setEmail] = useState('');
@@ -11,25 +12,23 @@ export default function LoginModal({ isOpen, onClose }) {
   const [error, setError] = useState(null);
   const [isAppCheckReady, setIsAppCheckReady] = useState(false);
 
-  // Inicializa o AppCheck com reCAPTCHA
   useEffect(() => {
     if (!window.appCheckInitialized) {
       const app = getApp();
       console.log('Inicializando AppCheck...');
       initializeAppCheck(app, {
-        provider: new ReCaptchaV3Provider('6LceH2IqAAAAACmtimxf5YJ9xFIMiHjN02rPp1Sj'),
+        provider: new ReCaptchaV3Provider('B8291FB9-05ED-45E1-ABCB-6BE9D3EE0317'),
         isTokenAutoRefreshEnabled: true,
       });
       console.log('AppCheck inicializado com sucesso.');
-      setIsAppCheckReady(true); // Marca como pronto quando inicializado
+      setIsAppCheckReady(true);
       window.appCheckInitialized = true;
     } else {
       console.log('AppCheck já inicializado.');
-      setIsAppCheckReady(true); // Caso já tenha sido inicializado, apenas habilita o botão de login
+      setIsAppCheckReady(true);
     }
   }, []);
 
-  // Lida com o submit do formulário de login
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
@@ -37,10 +36,27 @@ export default function LoginModal({ isOpen, onClose }) {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       console.log('Login realizado com sucesso.');
-      onClose(); // Fecha o modal após o login
+      onClose();
     } catch (error) {
       console.error('Erro ao fazer login:', error.message);
       setError('Falha no login: ' + error.message);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      await signInWithPopup(auth, provider);
+      console.log('Login com Google realizado com sucesso.');
+      onClose();
+    } catch (error) {
+      if (error.code === 'auth/popup-closed-by-user') {
+        console.warn('O usuário fechou o popup antes de concluir o login.');
+        setError('O popup foi fechado antes de concluir o login. Por favor, tente novamente.');
+      } else {
+        console.error('Erro ao fazer login com Google:', error.message);
+        setError('Falha no login com Google: ' + error.message);
+      }
     }
   };
 
@@ -58,7 +74,7 @@ export default function LoginModal({ isOpen, onClose }) {
             className="absolute top-5 right-5 text-red-500 hover:fill-white-1 transition-colors"
             aria-label="Fechar"
           >
-            <img src={XIcon} className="h-5 w-5" alt='IconeX' />
+            <img src={XIcon} className="h-5 w-5" alt="IconeX" />
           </button>
           <div className="flex items-center justify-start space-x-20">
             <img src={logo} className="object-scale-down h-20 w-10" alt="Logo" />
@@ -96,21 +112,6 @@ export default function LoginModal({ isOpen, onClose }) {
                   <img src={cadeadoIcon} className="h-6 w-6" alt="Cadeado" />
                 </span>
               </div>
-              <div className="flex items-center mb-4">
-                <input
-                  id="default-radio-1"
-                  type="radio"
-                  value=""
-                  name="default-radio"
-                  className="w-4 h-10 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                />
-                <label htmlFor="default-radio-1" className="ms-2 text-sm font-medium text-white-1 dark:text-gray-300">
-                  Lembrar-se
-                </label>
-                <a href="/" className="absolute right-8 text-white-1 hover:text-green-1">
-                  Esqueceu sua senha?
-                </a>
-              </div>
             </div>
             <button
               type="submit"
@@ -119,8 +120,17 @@ export default function LoginModal({ isOpen, onClose }) {
             >
               {isAppCheckReady ? 'Login' : 'Carregando reCAPTCHA...'}
             </button>
-            {error && <p className="text-red-500 mt-2">{error}</p>}
+            {error && <p className="text-red-1 mt-2">{error}</p>}
           </form>
+          <div className="mt-4">
+            <button
+              onClick={handleGoogleSignIn}
+              className="w-full flex items-center justify-center bg-white-1 text-black-1 font-bold py-2 rounded-md transition hover:bg-gray-1"
+            >
+              <FcGoogle className="h-5 w-5 mr-2" />
+              Login com Google
+            </button>
+          </div>
           <div className="flex justify-center text-sm mt-4">
             <p className="text-white-1 mr-2">Não tem cadastro?</p>
             <a href="/" className="text-white-1 hover:text-green-1">

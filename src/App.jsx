@@ -13,9 +13,31 @@ import Artigo1 from './pages/Conteudos/Artigo1.jsx';
 import Noticias from './pages/Noticias/Noticias.jsx';
 import VLibras from './components/VLibras.jsx';
 import { ConnectionStatus } from './components/ConnectionStatus.jsx';
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
 function App() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [showUpdate, setShowUpdate] = useState(false);
+
+  useEffect(() => {
+    serviceWorkerRegistration.register({
+      onUpdate: (registration) => {
+        setShowUpdate(true);
+        window.swUpdate = registration.waiting;
+      },
+    });
+  }, []);
+
+  const reloadPage = () => {
+    if (window.swUpdate) {
+      window.swUpdate.postMessage({ type: "SKIP_WAITING" });
+      window.swUpdate.addEventListener("statechange", (event) => {
+        if (event.target.state === "activated") {
+          window.location.reload();
+        }
+      });
+    }
+  };
   
   return (
     <Router>
@@ -31,6 +53,12 @@ function App() {
           <Route path="/Artigo1" element={<Artigo1 openLoginModal={() => setIsLoginModalOpen(true)} />} />
           <Route path="/Noticias" element={<Noticias openLoginModal={() => setIsLoginModalOpen(true)} />} />
         </Routes>
+        {showUpdate && (
+          <div className="update-notification">
+            <p>Nova versão disponível!</p>
+            <button onClick={reloadPage}>Atualizar</button>
+          </div>
+        )}
         <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
         <ConditionalFooter />
         <VLibras />

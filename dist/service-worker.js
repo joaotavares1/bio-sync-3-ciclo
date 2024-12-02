@@ -9,6 +9,7 @@ self.addEventListener("install", (event) => {
       return cache.addAll(urlsToCache);
     })
   );
+  self.skipWaiting(); // Força o SW a ser ativado imediatamente
 });
 
 // Interceptar requisições para uso offline
@@ -34,4 +35,12 @@ self.addEventListener("activate", (event) => {
       )
     )
   );
+  self.clients.claim(); // Garante que o novo SW controle todas as abas abertas
+});
+
+// Escuta mensagens para atualizar SW
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
 });

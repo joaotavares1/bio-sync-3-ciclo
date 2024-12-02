@@ -1,3 +1,40 @@
+import { registerRoute } from 'workbox-routing';
+import { CacheFirst, StaleWhileRevalidate, NetworkFirst } from 'workbox-strategies';
+import { CacheableResponsePlugin } from 'workbox-cacheable-response';
+import { ExpirationPlugin } from 'workbox-expiration';
+
+registerRoute(
+  ({ request }) => request.destination === 'style' || 
+                   request.destination === 'script' || 
+                   request.destination === 'image',
+  new CacheFirst({
+    cacheName: 'static-assets',
+    plugins: [
+      new ExpirationPlugin({
+        maxEntries: 50, // Limita o número de itens no cache
+        maxAgeSeconds: 30 * 24 * 60 * 60, // 30 dias
+      }),
+    ],
+  })
+);
+
+// Cache dinâmico para pontos de descarte e agendamentos
+registerRoute(
+  ({ url }) => url.pathname.startsWith('/api/pontos-de-descarte') || 
+               url.pathname.startsWith('/api/agendamentos'),
+  new NetworkFirst({
+    cacheName: 'dynamic-data',
+    plugins: [
+      new CacheableResponsePlugin({
+        statuses: [200], // Apenas respostas bem-sucedidas
+      }),
+      new ExpirationPlugin({
+        maxEntries: 20, // Máximo de 20 entradas no cache dinâmico
+        maxAgeSeconds: 7 * 24 * 60 * 60, // 7 dias
+      }),
+    ],
+  })
+);
 const CACHE_NAME = "bio-sync-cache-v1";
 const urlsToCache = [
   "/",

@@ -17,11 +17,16 @@ export function register(config) {
       const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
 
       if (isLocalhost) {
+        // Valida o service worker no localhost
         checkValidServiceWorker(swUrl, config);
+
         navigator.serviceWorker.ready.then(() => {
-          console.log("Este aplicativo está sendo servido por um cache com service worker.");
+          console.log(
+            "Este aplicativo está sendo servido por um cache com service worker em localhost."
+          );
         });
       } else {
+        // Registra o service worker em produção
         registerValidSW(swUrl, config);
       }
     });
@@ -32,6 +37,9 @@ function registerValidSW(swUrl, config) {
   navigator.serviceWorker
     .register(swUrl)
     .then((registration) => {
+      console.log("Service Worker registrado com sucesso:", registration);
+
+      // Detecção de atualização
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;
         if (installingWorker == null) {
@@ -40,7 +48,7 @@ function registerValidSW(swUrl, config) {
         installingWorker.onstatechange = () => {
           if (installingWorker.state === "installed") {
             if (navigator.serviceWorker.controller) {
-              console.log("Nova versão disponível!");
+              console.log("Nova versão disponível! Atualize para acessar novos recursos.");
               if (config && config.onUpdate) {
                 config.onUpdate(registration);
               }
@@ -53,6 +61,13 @@ function registerValidSW(swUrl, config) {
           }
         };
       };
+
+      // Ouvindo mensagens do SW para controle de atualização
+      navigator.serviceWorker.addEventListener("message", (event) => {
+        if (event.data && event.data.type === "SKIP_WAITING") {
+          registration.waiting.postMessage({ type: "SKIP_WAITING" });
+        }
+      });
     })
     .catch((error) => {
       console.error("Erro durante o registro do service worker:", error);
@@ -69,12 +84,14 @@ function checkValidServiceWorker(swUrl, config) {
         response.status === 404 ||
         (contentType != null && contentType.indexOf("javascript") === -1)
       ) {
+        // O SW não existe no servidor, limpa o registro local
         navigator.serviceWorker.ready.then((registration) => {
           registration.unregister().then(() => {
             window.location.reload();
           });
         });
       } else {
+        // Registra o SW válido
         registerValidSW(swUrl, config);
       }
     })
@@ -92,7 +109,7 @@ export function unregister() {
         registration.unregister();
       })
       .catch((error) => {
-        console.error(error.message);
+        console.error("Erro ao desregistrar o Service Worker:", error.message);
       });
   }
 }

@@ -1,5 +1,5 @@
 import { doc, setDoc, updateDoc, arrayUnion, getDoc, Timestamp } from "firebase/firestore";
-import { db } from "../firebaseConfig"; // Ajuste o caminho se necessário
+import { db } from "../src/firebase/firebase"; // Ajuste o caminho se necessário
 
 // Função para adicionar avaliação
 export async function adicionarAvaliacao(catadorId, doadorId, nota, comentario) {

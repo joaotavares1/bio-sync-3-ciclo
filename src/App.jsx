@@ -14,6 +14,7 @@ import Noticias from './pages/Noticias/Noticias.jsx';
 import VLibras from './components/VLibras.jsx';
 import { ConnectionStatus } from './components/ConnectionStatus.jsx';
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import AvaliacoesPage from './pages/AvaliacoesPage';
 
 function App() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -52,6 +53,7 @@ function App() {
           <Route path="/Conteudos" element={<Conteudos openLoginModal={() => setIsLoginModalOpen(true)} />} />
           <Route path="/Artigo1" element={<Artigo1 openLoginModal={() => setIsLoginModalOpen(true)} />} />
           <Route path="/Noticias" element={<Noticias openLoginModal={() => setIsLoginModalOpen(true)} />} />
+          <Route path="/avaliacoes/:catadorId" element={<AvaliacoesPage />} />
         </Routes>
         {showUpdate && (
           <div className="update-notification">

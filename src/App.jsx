@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import Home from './pages/Home/Home.jsx';
 import ButtonsUserRegister from './pages/Register/ButtonsUserRegister.jsx';
@@ -16,7 +16,7 @@ import { ConnectionStatus } from './components/ConnectionStatus.jsx';
 
 function App() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-
+  
   return (
     <Router>
       <div className="App">
@@ -34,7 +34,7 @@ function App() {
         <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
         <ConditionalFooter />
         <VLibras />
-        <ConnectionStatus /> {/* Aqui o componente ConnectionStatus será renderizado */}
+        <ConnectionStatus /> 
       </div>
     </Router>
   );

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
+
 const causes = [
   { name: 'IBAMA', logo: '/ibamacausa.png', url: '' },
   { name: 'Ecobarreira', logo: '/ecobarreira.png', url: '' },
@@ -77,7 +78,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white-1 font-montserrat">
-
       <main className="container mx-auto px-4 sm:px-6 py-8">
         <h1 className="text-3xl sm:text-4xl font-bold mb-6 sm:mb-8 text-center mt-8 sm:mt-12">Quem Somos?</h1>
         <p className="text-left mx-auto max-w-2xl text-lg sm:text-xl">
@@ -87,7 +87,6 @@ export default function Home() {
           visibilidade e oportunidade para pequenos coletores,
           além disso, disponibilizar informações de maneira prática para os cidadãos.
         </p>
-
         <div className="flex flex-wrap justify-center gap-6 sm:gap-8 lg:gap-16 my-8 sm:my-12 lg:my-24">
           <div className="bg-white-1 rounded-lg overflow-hidden transition-transform transform hover:scale-105 cursor-pointer">
             <HashLink to={'/#Conscientização'}>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { obterAvaliacoes } from "../services/avaliacaoService";
+import { obterAvaliacoes } from "../avaliacaoService";
 
 export default function AvaliacoesList({ catadorId }) {
   const [avaliacoes, setAvaliacoes] = useState([]);

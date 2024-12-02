@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { adicionarAvaliacao } from "../services/avaliacaoService";
+import { adicionarAvaliacao } from "../avaliacaoService";
 
 export default function AvaliacaoForm({ catadorId }) {
   const [nota, setNota] = useState(0);

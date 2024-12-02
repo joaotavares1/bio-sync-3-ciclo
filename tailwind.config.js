@@ -18,6 +18,16 @@ module.exports = {
       white:{
         1:'#EEEEEE',
       },
+      red:{
+        1:'#FF0000 '
+      },
+      blue:{
+        1:'#0000FF',
+        2:'#00BFFF'
+      },
+      yellow:{
+        1:'#FFFF00'
+      }
     },
     screens: {
       'sm': '640px',

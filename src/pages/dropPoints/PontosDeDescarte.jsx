@@ -97,12 +97,13 @@ export default function PontosDeDescarte() {
   const [selectedPoint, setSelectedPoint] = useState(null);
 
   const [filters, setFilters] = useState({
+    cep: '',
     material: '',
     estado: '',
     cidade: '',
     bairro: '',
     periodo: '',
-  });
+  })
 
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);

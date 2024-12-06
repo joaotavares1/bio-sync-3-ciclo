@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
-import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
-
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration.js";
 import Home from "./pages/Home/Home.jsx";
 import ButtonsUserRegister from "./pages/Register/ButtonsUserRegister.jsx";
 import PontosDeDescarte from "./pages/dropPoints/PontosDeDescarte.jsx";
 import LoginModal from "./components/LoginModal.jsx";
 import RegistroDeUsuarios from "./pages/Register/UserRegister.jsx";
+import CatadorRegister from './pages/Register/CatadorRegister';
 import Header from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
 import Agendamentos from "./pages/Agendamentos/Agendamentos.jsx";
@@ -45,9 +45,10 @@ function App() {
         <ConditionalHeader openLoginModal={() => setIsLoginModalOpen(true)} />
         <Routes>
           <Route path="/" element={<Home openLoginModal={() => setIsLoginModalOpen(true)} />} />
-          <Route path="/buttonsUserRegister" element={<ButtonsUserRegister />} />
+          <Route path="/ButtonsUserRegister" element={<ButtonsUserRegister />} />
           <Route path="/dropPoints" element={<PontosDeDescarte />} />
           <Route path="/UserRegister" element={<RegistroDeUsuarios />} />
+          <Route path="/CatadorRegister" element={<CatadorRegister />} />
           <Route path="/Agendamentos" element={<Agendamentos />} />
           <Route path="/Conteudos" element={<Conteudos />} />
           <Route path="/Artigo1" element={<Artigo1 />} />
@@ -69,7 +70,7 @@ function App() {
 
 function ConditionalHeader({ openLoginModal }) {
   const location = useLocation();
-  const showHeaderRoutes = ["/", "/UserRegister", "/buttonsUserRegister", "/dropPoints", "/Agendamentos", "/Conteudos", "/Artigo1", "/Noticias"];
+  const showHeaderRoutes = ["/CatadorRegister", "/UserRegister", "/ButtonsUserRegister", "/dropPoints", "/Agendamentos", "/Conteudos", "/Artigo1", "/Noticias"];
 
   return showHeaderRoutes.includes(location.pathname) ? (
     <Header openLoginModal={openLoginModal} />
@@ -78,7 +79,7 @@ function ConditionalHeader({ openLoginModal }) {
 
 function ConditionalFooter() {
   const location = useLocation();
-  const showFooterRoutes = ["/", "/UserRegister", "/buttonsUserRegister", "/dropPoints", "/Agendamentos", "/Conteudos", "/Artigo1", "/Noticias"];
+  const showFooterRoutes = ["/CatadorRegister", "/UserRegister", "/ButtonsUserRegister", "/dropPoints", "/Agendamentos", "/Conteudos", "/Artigo1", "/Noticias"];
 
   return showFooterRoutes.includes(location.pathname) ? <Footer /> : null;
 }

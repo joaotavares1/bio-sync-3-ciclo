@@ -67,7 +67,7 @@ export default function Header({ openLoginModal }) {
                     Faça
                     <button onClick={openLoginModal} className="ml-2 px-2 font-bold text-white-1 rounded transition-transform transform hover:scale-105 cursor-pointer">Login</button> ou
                   </p>
-                  <Link to="/buttonsUserRegister" className="font-bold text-white-1">
+                  <Link to="/ButtonsUserRegister" className="font-bold text-white-1">
                     <p className="rounded transition-transform transform hover:scale-105 cursor-pointer">
                       Cadastre-se
                     </p>
@@ -100,7 +100,7 @@ export default function Header({ openLoginModal }) {
               // Logged-out state for mobile menu (original code)
               <>
                 <button onClick={openLoginModal} className="block text-white-1 py-2 font-bold">Login</button>
-                <Link to="/buttonsUserRegister" className="block text-white-1 py-2 font-bold">Cadastre-se</Link>
+                <Link to="/ButtonsUserRegister" className="block text-white-1 py-2 font-bold">Cadastre-se</Link>
               </>
             )}
           </div>

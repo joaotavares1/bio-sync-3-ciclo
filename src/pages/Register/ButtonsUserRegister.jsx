@@ -1,41 +1,53 @@
-import React, {  } from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 
-
-export default function ButtonsUserRegister({ openLoginModal }) {
-  const imgRegister1 = '/undraw_throw_away_trash_x60k.svg'
-  const imgRegister2 = '/undraw_collecting_re_lp6p.svg'
+// Corrigido para exportar como default
+export default function ButtonsUserRegister() {
+  const imgCatador = '/undraw_catador_example.svg';
+  const imgDescartando = '/undraw_discarding_example.svg';
 
   return (
-    <div className="min-h-screen bg-white-1 font-montserrat">
-      
+    <div className="container mx-auto p-4">
+      <h1 className="text-4xl font-bold text-center mb-6">Tela do Catador</h1>
+      <p className="text-center text-lg mb-8">
+        Bem-vindo à página de cadastro do catador! Escolha uma das opções abaixo para se cadastrar.
+      </p>
 
-      <main className="container mx-auto px-4 sm:px-6 py-8">
+      {/* Seção de cadastro do Catador */}
       <div className="grid md:grid-cols-2 gap-8">
-          <div className="bg-white-1 p-6 rounded-lg shadow-lg">
-            <h2 className="text-2xl font-bold mb-4 text-center">Receptor/Catador</h2>
-            <p className="mb-4 text-center">Faça seu cadastro para ter acesso total</p>
-            <Link to="/UserRegister" className="flex items-center rounded-lg overflow-hidden transition-transform transform hover:scale-105">
-              <img src={imgRegister1} alt="Receptor/Catador" className="mb-4 mx-auto" />
-            </Link>
-            <button to className="w-full bg-green-1 text-white-1 py-2 px-4 rounded hover:bg-opacity-90 transition duration-300">
-              Cadastrar-se
-            </button>
-          </div>
-          <div className="bg-white-1 p-6 rounded-lg shadow-lg">
-            <h2 className="text-2xl font-bold mb-4 text-center">Ponto De Descarte</h2>
-            <p className="mb-4 text-center">Cadastre sua residência ou comércio para realizarem o descarte</p>
-            <Link className="flex items-center rounded-lg overflow-hidden transition-transform transform hover:scale-105">
-              <img src={imgRegister2} alt="Receptor/Catador" className="mb-4 mx-auto" />
-            </Link>
-            <button to='/' className="w-full bg-green-1 text-white-1 py-2 px-4 rounded hover:bg-opacity-90 transition duration-300">
-              Cadastrar Ponto de Descarte
-            </button>
-          </div>
+        <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+          <h2 className="text-2xl font-bold mb-4 text-center">Cadastrar como Catador</h2>
+          <p className="mb-4 text-center">Faça o cadastro para começar a realizar a coleta de materiais recicláveis.</p>
+          <Link
+            to="/UserRegister"
+            className="flex items-center rounded-lg overflow-hidden transition-transform transform hover:scale-105 mb-4"
+          >
+            <img src={imgCatador} alt="Cadastro Catador" className="mx-auto" />
+          </Link>
+          <Link
+            to="/UserRegister"
+            className="w-full bg-green-500 text-white py-2 px-4 rounded hover:bg-green-400 transition duration-300 text-center"
+          >
+            Cadastrar-se como Catador
+          </Link>
         </div>
-      </main>
+        </div>
 
+        {/* Seção de cadastro de Ponto de Descarte */}
+        <div className="grid md:grid-cols-2 gap-8"></div>
+        <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+          <h2 className="text-2xl font-bold mb-4 text-center">Cadastrar Ponto de Descarte</h2>
+          <p className="mb-4 text-center">Cadastre o ponto de descarte de materiais recicláveis, como sua residência ou comércio.</p>
+          <Link to="/CatadorRegister" className="flex items-center rounded-lg overflow-hidden transition-transform transform hover:scale-105 mb-4">
+            <img src={imgDescartando} alt="Cadastro Ponto de Descarte" className="mx-auto" />
+          </Link>
+            className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-400 transition duration-300 text-center"
+          
+            Cadastrar Ponto de Descarte
+          
+        
+      </div>
     </div>
   );
 }
